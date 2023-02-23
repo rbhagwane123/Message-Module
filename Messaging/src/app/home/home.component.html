@@ -1,0 +1,83 @@
+<div class="container-fluid" *ngIf="showScreen">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="user-list-card">
+        <div
+          class="user-card"
+          [ngClass]="user?.phone === selectedUser?.phone && 'active'"
+          *ngFor="let user of listUsers"
+          (click)="selectUserHandler(user?.phone, user?.email)"
+        >
+          <img [src]="user?.image" [alt]="user?.name" class="avatar" />
+          <p class="username">{{ user?.name }}</p>
+        </div>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+    <div class="col-md-8">
+      <div class="chat-container">
+        <ng-container *ngIf="selectedUser">
+          <div class="chat-header p-2">
+            <img
+              [src]="selectedUser?.image"
+              [alt]="selectedUser?.name"
+              class="avatar"
+            />
+            <p class="username" style="font-size: 20px">
+              {{ selectedUser?.name }}
+            </p>
+            <img
+              *ngIf="status"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwul32JyFUcE9Ba2Tc51uA0FZBcZ2tOvE4y6M9qCb81Ln4ZRl_esEXgdZ-fyB21FMis38&usqp=CAU"
+              class="status ms-2 mt-1"
+              alt="status"
+            />
+          </div>
+
+          <div class="chat-body">
+            <div
+              *ngFor="let item of messageArray"
+              [ngClass]="item?.user === currentUser[0]?.name && 'same-user'"
+            >
+              <img
+                *ngIf="item.imgMssg"
+                [src]="item.imgMssg"
+                alt="trialImage"
+                style="width: 190px; height: 170px; border-radius: 5%;"
+
+              />
+              <p *ngIf="item.message" class="message-container">{{ item?.message }}</p>
+            </div>
+          </div>
+
+          <div class="chat-footer">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="form-group mb-0">
+                  <input
+                    type="text"
+                    placeholder="Type a message"
+                    class="form-control"
+                    [(ngModel)]="messageText"
+                    (keyup)="$event.keyCode === 13 && sendMessage()"
+                  />
+                </div>
+              </div>
+              <div class="col-md-2">
+                <app-upload-document></app-upload-document>
+              </div>
+              <div class="col-md-2 text-center align-self-center">
+                <button
+                  class="btn btn-primary btn-sm px-3"
+                  (click)="sendMessage()"
+                >
+                  Send
+                </button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

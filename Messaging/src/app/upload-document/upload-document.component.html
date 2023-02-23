@@ -1,0 +1,45 @@
+<img class="btn btn-link" (click)="open(content)" style="height: 60px; width: 60px; border-radius: 50%;" src="https://www.shutterstock.com/image-vector/attachment-icon-clip-sign-600w-1347815111.jpg">
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Image</h4>
+    <button
+      type="button"
+      class="btn-close btn-outline btn-outline-gray"
+      aria-label="Close"
+      (click)="d('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="container">
+        <form [formGroup]="docForm">
+          <!-- IMAGE UPLOAD -->
+          <div class="form-group mb-10">
+            <label for="exampleFormControlInput2" class="form-label"
+              >Select image</label
+            >
+            <input
+              class="form-control"
+              type="file"
+              name="image"
+              ng2FileSelect
+              formControlName="image"
+              [uploader]="uploader"
+              accept="image/x-png,image/gif,image/jpeg"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline btn-outline-primary"
+      (click)="uploader.uploadAll()"
+    >
+      Send
+    </button>
+  </div>
+</ng-template>

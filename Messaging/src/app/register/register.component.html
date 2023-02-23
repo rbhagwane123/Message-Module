@@ -1,0 +1,107 @@
+<button class="btn btn-lg btn-link" (click)="open(content)">Register</button>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Register user</h4>
+    <button
+      type="button"
+      class="btn-close btn-outline btn-outline-gray"
+      aria-label="Close"
+      (click)="d('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="container">
+        <form [formGroup]="registerForm">
+          <!-- NAME -->
+          <div class="form-group mb-10">
+            <label for="exampleFormControlInput1" class="form-label"
+              >Name</label
+            >
+            <input
+              type="text"
+              class="form-control form-control-solid"
+              formControlName="name"
+              id="name"
+              name="name"
+              required
+              placeholder="Enter Name"
+            />
+          </div>
+
+          <!-- EMAIL -->
+          <div class="form-group mb-10">
+            <label for="exampleFormControlInput1" class="form-label"
+              >Email</label
+            >
+            <input
+              type="email"
+              class="form-control form-control-solid"
+              formControlName="email"
+              id="email"
+              name="email"
+              required
+              placeholder="Enter email id"
+            />
+          </div>
+
+          <!-- PASSWORD -->
+          <div class="form-group mb-10">
+            <label for="exampleFormControlInput1" class="required form-label"
+              >Password</label
+            >
+            <input
+              type="password"
+              class="form-control form-control-solid"
+              formControlName="password"
+              id="password"
+              required
+              placeholder="Enter password"
+            />
+          </div>
+
+          <!-- PHONE -->
+          <div class="form-group mb-10">
+            <label for="exampleFormControlInput1" class="form-label"
+              >Phone No</label
+            >
+            <input
+              type="number"
+              class="form-control form-control-solid"
+              formControlName="phone"
+              id="phone"
+              name="phone"
+              required
+              placeholder="Enter phone no"
+            />
+          </div>
+
+          <!-- IMAGE UPLOAD -->
+          <div class="form-group mb-10">
+            <label for="exampleFormControlInput2" class="form-label"
+              >Profile image</label
+            >
+            <input
+              class="form-control"
+              type="file"
+              name="image"
+              ng2FileSelect
+              formControlName="image"
+              [uploader]="uploader"
+              accept="image/x-png,image/gif,image/jpeg"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline btn-outline-primary"
+      (click)="uploader.uploadAll()">
+      Sing in
+    </button>
+  </div>
+</ng-template>
