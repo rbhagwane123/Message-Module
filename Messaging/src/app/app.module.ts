@@ -13,6 +13,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
+import { SafePipe } from './safe.pipe';
 
 export const routes: Routes=[
   { path:'', component: AppComponent, pathMatch: 'full' },
@@ -28,6 +29,7 @@ export const routes: Routes=[
     RegisterComponent,
     HomeComponent,
     UploadDocumentComponent,
+    SafePipe,
 
   ],
   imports: [
@@ -44,7 +46,7 @@ export const routes: Routes=[
     BrowserAnimationsModule,
 
   ],
-  providers: [HttpClient],
+  providers: [HttpClient, SafePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

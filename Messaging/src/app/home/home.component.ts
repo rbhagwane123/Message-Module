@@ -1,15 +1,12 @@
-
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { of } from 'rxjs';
 import { AppComponent } from '../app.component';
 import { ChatService } from '../services/chat.service';
 import { SetterGentterService } from '../services/setter-gentter.service';
 import { StoreService } from '../services/store.service';
 import { UserSessionService } from '../services/user-session.service';
-// import { RootObject } from '../chatData';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -22,33 +19,35 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public messageText!: string;
   private storageArray: any;
   public showScreen = false;
-  public phone!: string;
   public currentUser: any;
   public selectedUser: any;
   public listUsers: any;
-  public messageArray: { user: string; message: string, imgMssg:string }[] = [];
+  public messageArray: {
+    user: string;
+    message: string;
+    imgMssg: string;
+    pdfMssg: string;
+  }[] = [];
   public roomValue: any = {};
   public roomsID: any = {};
   public chatArray: any = {};
   public status: boolean = false;
+  public viewType!: boolean;
 
   constructor(
-    private fb: FormBuilder,
     private router: Router,
     private storeServ: StoreService,
     private userSession: UserSessionService,
     private setterServ: SetterGentterService,
     private component: AppComponent,
     private chatService: ChatService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private sanitizer: DomSanitizer
   ) {}
 
-  ngAfterViewInit() {
-
-  }
+  ngAfterViewInit() {}
 
   ngOnInit() {
-    console.log('Called from upload');
     this.setterServ.setLoginStatus(true);
     this.renderData();
     this.chatService
@@ -135,7 +134,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
           this.roomValue = result.data;
           this.roomId = this.checkingRoom(this.roomValue, phone);
           this.setterServ.setRoom(this.roomId);
-          // this.roomId = "9167458152-9167458152";
           const storeIndex = this.roomValue.findIndex(
             (storage: any) => storage.roomId === this.roomId
           );
@@ -144,7 +142,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
           if (storeIndex > -1) {
             this.messageArray = this.roomValue[storeIndex].chats;
           }
-
           this.join(this.currentUser[0].name, this.roomId);
         } else {
           console.log('empty');
@@ -179,9 +176,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
         room: this.roomId,
         message: this.messageText,
       });
-      // this.storageArray = this.chatService.getStorage();
+      // this. = this.chatService.getStorage();
       this.storageArray = this.roomValue;
-      // console.log('STORAGE ARRAY: '+this.storageArray);
 
       const storeIndex = this.roomValue.findIndex(
         (storage: any) => storage.roomId === this.roomId
@@ -195,9 +191,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
       this.storeServ
         .updateSingleMessage(this.chatArray, this.chatArray._id)
-        .subscribe((res: any) => {
-          console.log('updateeddddd');
-        });
+        .subscribe((res: any) => {});
 
       this.messageText = '';
     });

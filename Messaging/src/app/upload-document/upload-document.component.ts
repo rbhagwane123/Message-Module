@@ -10,6 +10,7 @@ import { SetterGentterService } from '../services/setter-gentter.service';
 import { StoreService } from '../services/store.service';
 import { UserSessionService } from '../services/user-session.service';
 
+
 const URL = 'http://localhost:4000/api/chatUploads';
 @Component({
   selector: 'app-upload-document',
@@ -50,7 +51,6 @@ export class UploadDocumentComponent implements OnInit {
         file.file.type == 'image/jpg' ||
         file.file.type == 'image/png'
       ) {
-        // console.log(this.registerForm.get('name')?.value);
         const _id = this.makeid(5);
         this.imageData =
           '/' +
@@ -73,19 +73,28 @@ export class UploadDocumentComponent implements OnInit {
         const storeIndex = this.roomValue.findIndex(
           (storage: any) => storage.roomId === this.setterServ.getRoom()
         );
-
-        this.chatArray = this.roomValue[storeIndex];
-        this.chatArray.chats.push({
-          user: this.setterServ.getcurrentUserName(),
-          imgMssg: URL + this.imageData,
-        });
+        console.log(this.inputType);
+        if (this.inputType == '.jpeg') {
+          this.chatArray = this.roomValue[storeIndex];
+          this.chatArray.chats.push({
+            user: this.setterServ.getcurrentUserName(),
+            imgMssg: URL + this.imageData,
+          });
+        } else if (this.inputType == '.pdf') {
+          this.chatArray = this.roomValue[storeIndex];
+          this.chatArray.chats.push({
+            user: this.setterServ.getcurrentUserName(),
+            imgMssg: URL + this.imageData,
+          });
+        }
 
         this.storageServ
           .updateSingleMessage(this.chatArray, this.chatArray._id)
           .subscribe((res: any) => {
-
-            // this.homeComp.selectUserHandler();
-            this.homeComp.selectUserHandler(this.setterServ.getPhone(), this.setterServ.getEmail());
+            this.homeComp.selectUserHandler(
+              this.setterServ.getPhone(),
+              this.setterServ.getEmail()
+            );
             this.router.navigate(['/home']);
             this.modalService.dismissAll();
           });

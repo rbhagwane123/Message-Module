@@ -8,7 +8,6 @@ export class SetterGentterService {
   loginView:boolean=true;
   loginStatus:boolean=false;
   log:boolean= false;
-  messageArray: {user:String, imgMssg: String}[] = [];
   currentUserName!:string;
   roomId: string='';
   phone:string='';
@@ -41,18 +40,18 @@ export class SetterGentterService {
     return this.log;
   }
 
-  setimgMssfUrl(user:string, image:string)
-  {
-    this.messageArray.push({
-      user:user,
-      imgMssg: image
-    });
-  }
+  // setimgMssfUrl(user:string, image:string)
+  // {
+  //   this.messageArray.push({
+  //     user:user,
+  //     imgMssg: image
+  //   });
+  // }
 
-  getimgMssfUrl()
-  {
-    return this.messageArray;
-  }
+  // getimgMssfUrl()
+  // {
+  //   return this.messageArray;
+  // }
 
   setcurrentUserName(val:string)
   {
